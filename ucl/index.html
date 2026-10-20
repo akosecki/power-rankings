@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>UEFA Champions League Power Rankings</title><style>@font-face{font-family:Archivo;font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-wdth-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Archivo;font-style:italic;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-wdth-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Archivo;font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-ext-wdth-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Archivo;font-style:italic;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-ext-wdth-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{--ink:#000;--paper:#fff;--band:#eceef1;--muted:#565b63;--rule:#c9cdd3;--win:#0a7a3a;--loss:#c8102e;--hi:#ffe14a;--accent:#1e90ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100vh;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.55}
+a{color:inherit}
+a:focus-visible,summary:focus-visible,.ticker:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.wrap{max-width:780px;margin:0 auto;padding:0 18px}
+.topbar{background:var(--ink);color:#fff}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:11px;padding-bottom:11px}
+.topbar a:focus-visible{outline-color:#fff}
+.mark{font-stretch:62%;font-weight:900;font-style:italic;font-size:25px;line-height:1;text-transform:uppercase;text-decoration:none}
+.nav{font-size:14px;font-weight:600;white-space:nowrap}
+.hero{background:var(--accent);padding:30px 0 24px}
+.hero h1{font-stretch:62%;font-weight:900;font-style:italic;font-size:clamp(76px,22vw,168px);line-height:.8;text-transform:uppercase;letter-spacing:-.02em}
+.hero .sub{font-stretch:62%;font-weight:900;font-style:italic;font-size:clamp(30px,8.4vw,62px);line-height:.95;text-transform:uppercase;margin-top:8px}
+.hero p{margin-top:14px;font-size:15.5px;font-weight:500;max-width:58ch}
+.ticker{background:var(--ink);color:#fff;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ticker .wrap{display:flex;width:max-content;min-width:0;max-width:none;margin:0 auto}
+.game{display:grid;grid-template-columns:auto auto;column-gap:16px;padding:11px 20px 11px 0;margin-right:20px;border-right:1px solid #4a4d52;font-size:13.5px;line-height:1.4;white-space:nowrap}
+.game:last-child{border-right:0;margin-right:0}
+.game b{font-weight:800}
+.game .lost{color:#b6bac1}
+.game .pts{text-align:right;font-variant-numeric:tabular-nums}
+.sec{padding:36px 0 0}
+h2{font-stretch:62%;font-weight:900;font-style:italic;font-size:46px;line-height:.9;text-transform:uppercase;margin-bottom:16px}
+.lede{padding-top:30px}
+.lede p,.prose p{max-width:64ch}
+.lede p+p,.prose p+p{margin-top:12px}
+.lede p:first-child{font-size:20px;line-height:1.45;font-weight:500}
+.hardware{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:30px}
+.hw{padding:10px 0 11px;border-top:1px solid var(--rule)}
+.hw b{display:block;font-stretch:75%;font-weight:800;font-size:14.5px}
+.hw span{font-weight:600}
+.hw small{display:block;font-size:14px;color:var(--muted)}
+.slipband{background:var(--band);margin-top:38px;padding:34px 0 46px}
+.slipband h2{margin-bottom:22px}
+.slipgrid{display:grid;grid-template-columns:minmax(0,390px) minmax(0,1fr);column-gap:44px;align-items:center}
+.tally b{display:block;font-stretch:62%;font-weight:900;font-style:italic;font-size:132px;line-height:.82;font-variant-numeric:tabular-nums}
+.tally span{display:block;font-stretch:75%;font-weight:800;font-size:17px;margin-top:10px}
+.tally small{display:block;font-size:14.5px;color:var(--muted);margin-top:4px;max-width:30ch}
+.slipwrap{max-width:390px;transform:rotate(-1.3deg);filter:drop-shadow(0 12px 12px rgba(0,0,0,.22))}
+.slip{--tooth:9px;background:#fffef7;padding:22px 20px 34px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;font-size:13px;line-height:1.5;
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/calc(2*var(--tooth)) 100%;
+  mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/calc(2*var(--tooth)) 100%}
+.slip .title{text-align:center;font-weight:700;font-size:15px;text-transform:uppercase}
+.slip .center{text-align:center}
+.slip hr{border:0;border-top:1.5px dashed var(--ink);margin:12px 0}
+.slip .pick{display:grid;grid-template-columns:1fr auto auto;column-gap:12px;align-items:end;padding:4px 0}
+.slip .hit{font-weight:700}
+.slip .miss{font-weight:700;text-decoration:line-through}
+.slip .sum{display:flex;justify-content:space-between;gap:12px}
+.tierband{background:var(--ink);color:#fff;margin-top:40px;padding:8px 14px 7px;font-stretch:62%;font-weight:900;font-style:italic;font-size:27px;line-height:1;text-transform:uppercase}
+.tierband:first-child{margin-top:0}
+.team{border-top:5px solid var(--ink);padding:18px 0 30px}
+.tierband+.team{border-top:0}
+.team .head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:16px;align-items:start}
+.num{font-stretch:62%;font-weight:900;font-style:italic;font-size:96px;line-height:.8;min-width:58px;font-variant-numeric:tabular-nums}
+.team h3{font-stretch:70%;font-weight:900;font-size:33px;line-height:1.02;overflow-wrap:anywhere}
+.byline{font-size:14px;color:var(--muted);margin-top:6px}
+.move{font-weight:800;font-size:15px;white-space:nowrap;padding-top:7px;text-align:right}
+.spark{display:block;margin:8px 0 0 auto;overflow:visible}
+.spark polyline{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.spark circle{fill:var(--ink)}
+.up{color:var(--win)}.down{color:var(--loss)}.dim{color:var(--muted)}
+.lead .num{background:var(--accent);font-size:124px;padding:12px 16px 2px 8px}
+.lead h3{font-size:44px}
+.stamps{display:flex;flex-wrap:wrap;gap:10px 12px;margin-top:16px}
+.stamp{border:2.5px solid currentColor;border-radius:3px;padding:1px 8px 0;font-stretch:75%;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.04em;transform:rotate(-2deg)}
+.stamp:nth-child(even){transform:rotate(1.6deg)}
+.stamp.good{color:var(--win)}.stamp.bad{color:var(--loss)}
+.result{display:flex;align-items:baseline;gap:10px;margin-top:16px;font-weight:600}
+.result i{font-style:normal;font-weight:900;color:#fff;background:var(--ink);padding:0 8px}
+.result.W i{background:var(--win)}.result.L i{background:var(--loss)}
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:14px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.strip div{padding:10px 8px 8px 0;min-width:0}
+.strip div+div{border-left:1px solid var(--rule);padding-left:10px}
+.strip b{display:block;font-stretch:68%;font-weight:900;font-size:29px;line-height:1;font-variant-numeric:tabular-nums}
+.strip span{display:block;font-size:12.5px;line-height:1.25;color:var(--muted);margin-top:3px}
+.facts{margin-top:12px;font-size:15px}
+.facts b{font-weight:700}
+.blurb{margin-top:20px;max-width:66ch}
+.blurb p{margin-top:12px}
+.kicker{font-stretch:68%;font-weight:900;font-style:italic;font-size:27px;line-height:1.3}
+.kicker span{background:linear-gradient(transparent 50%,var(--hi) 50%,var(--hi) 93%,transparent 93%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 5px 0 3px}
+details{margin-top:16px}
+summary{cursor:pointer;display:inline-block;font-weight:700;font-size:15px;text-decoration:underline;text-underline-offset:3px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:" +"}
+details[open] summary::after{content:" \2212"}
+.deep{margin-top:10px;font-size:15px;display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:18px;row-gap:5px}
+.deep dt{color:var(--muted)}
+.deep dd{font-weight:600}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:700;font-size:13px;border-bottom:3px solid var(--ink);padding:6px 12px 6px 0;white-space:nowrap}
+td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule)}
+td.n,th.n{text-align:right;padding-right:0;padding-left:12px;white-space:nowrap}
+td.c,th.c{text-align:center;padding-left:6px;padding-right:6px}
+td.k,th.k{width:1%;white-space:nowrap;font-weight:800;padding-right:14px}
+tr.grp th{font-stretch:62%;font-weight:900;font-style:italic;font-size:25px;line-height:1;text-transform:uppercase;border-bottom:3px solid var(--ink);padding:26px 0 6px}
+tr.grp:first-child th{padding-top:0}
+tr.cols th{border-bottom:1px solid var(--ink);color:var(--muted);font-weight:600;font-size:12.5px;padding-top:7px;padding-bottom:5px}
+td.up,td.down,td .up,td .down{font-weight:700}
+tr.out td{color:var(--muted)}
+.meter{display:inline-block;width:64px;height:8px;background:var(--band);vertical-align:middle;margin-left:8px}
+.meter i{display:block;height:100%;background:var(--ink)}
+.note{font-size:13.5px;color:var(--muted);margin-top:10px;max-width:70ch}
+.duel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+.duel b{display:block;font-stretch:75%;font-weight:800;font-size:14.5px}
+.duel strong{display:block;font-stretch:66%;font-weight:900;font-style:italic;font-size:31px;line-height:1;margin:4px 0 6px}
+.duel span{font-size:15px;color:var(--muted)}
+.editions a{display:grid;grid-template-columns:minmax(120px,auto) minmax(0,1fr);column-gap:18px;align-items:center;padding:13px 0 12px;border-top:1px solid var(--rule);text-decoration:none}
+.editions a:first-child{border-top:5px solid var(--ink)}
+.editions .wk{font-stretch:62%;font-weight:900;font-style:italic;font-size:46px;line-height:.9;text-transform:uppercase}
+.editions .who{font-size:15px}
+.editions .who small{display:block;color:var(--muted);font-size:14px}
+.editions a:hover .wk,.leagues a:hover .wk{text-decoration:underline;text-decoration-thickness:4px}
+.new{font-style:normal;font-stretch:100%;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:3px 7px;margin-left:10px;vertical-align:middle;text-transform:none}
+.leagues a{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:16px;align-items:stretch;padding:14px 0;border-top:1px solid var(--rule);text-decoration:none}
+.leagues a:first-child{border-top:5px solid var(--ink)}
+.leagues i{display:block}
+.leagues .wk{font-stretch:62%;font-weight:900;font-style:italic;font-size:44px;line-height:.95;text-transform:uppercase}
+.leagues small{display:block;color:var(--muted);font-size:14px}
+.mark,.hero h1,.hero .sub,h2,.tierband,.wk,tr.grp th{word-spacing:.14em}
+.foot{margin-top:auto;padding-top:56px}
+footer{background:var(--ink);color:#fff;padding:18px 0;font-size:14px}
+footer .mark{font-size:20px}
+@media(max-width:560px){
+ body{font-size:16.5px}
+ h2{font-size:38px}
+ .hardware,.duel,.slipgrid{grid-template-columns:minmax(0,1fr)}
+ .slipgrid{row-gap:26px}
+ .tally b{font-size:104px}
+ .hide-s{display:none}
+ .team .head{grid-template-columns:auto minmax(0,1fr)}
+ .move{grid-column:2;text-align:left;padding-top:6px;display:flex;align-items:center;gap:12px}
+ .spark{margin:0}
+ td,th{padding-right:8px}
+ .num{font-size:70px;min-width:44px}
+ .team .head{column-gap:12px}
+ .team h3{font-size:26px}
+ .lead .num{font-size:92px;padding:10px 12px 2px 6px}
+ .lead h3{font-size:32px}
+ .strip b{font-size:23px}
+ .strip span{font-size:11.5px}
+ .kicker{font-size:24px}
+ .editions a{grid-template-columns:minmax(96px,auto) minmax(0,1fr)}
+ .editions .wk{font-size:38px}
+}
+</style></head><body><div class="topbar"><div class="wrap"><a class="mark" href="../index.html">Kosecki&#x27;s Power Rankings</a><a class="nav" href="../index.html">All leagues</a></div></div><header class="hero"><div class="wrap"><h1>UEFA Champions League</h1><div class="sub">Power rankings</div></div></header><section class="sec"><div class="wrap"><div class="editions"><a href="2026/preseason.html"><div class="wk">Preseason</div><div class="who">Real madrid at number one<span class="new">Latest</span><small>projected, 2026 season</small></div></a></div></div></section><div class="foot"><footer><div class="wrap"><span class="mark">Kosecki&#x27;s Power Rankings</span></div></footer></div></body></html>
