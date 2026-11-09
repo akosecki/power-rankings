@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>March Madness Power Rankings</title><style>@font-face{font-family:Archivo;font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-wdth-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Archivo;font-style:italic;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-wdth-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Archivo;font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-ext-wdth-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Archivo;font-style:italic;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../assets/archivo-latin-ext-wdth-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{--ink:#000;--paper:#fff;--band:#eceef1;--muted:#565b63;--rule:#c9cdd3;--win:#0a7a3a;--loss:#c8102e;--hi:#ffe14a;--accent:#ff6b35}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100vh;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.55}
+a{color:inherit}
+a:focus-visible,summary:focus-visible,.ticker:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.wrap{max-width:780px;margin:0 auto;padding:0 18px}
+.topbar{background:var(--ink);color:#fff}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:11px;padding-bottom:11px}
+.topbar a:focus-visible{outline-color:#fff}
+.mark{font-stretch:62%;font-weight:900;font-style:italic;font-size:25px;line-height:1;text-transform:uppercase;text-decoration:none}
+.nav{font-size:14px;font-weight:600;white-space:nowrap}
+.hero{background:var(--accent);padding:30px 0 24px}
+.hero h1{font-stretch:62%;font-weight:900;font-style:italic;font-size:clamp(76px,22vw,168px);line-height:.8;text-transform:uppercase;letter-spacing:-.02em}
+.hero .sub{font-stretch:62%;font-weight:900;font-style:italic;font-size:clamp(30px,8.4vw,62px);line-height:.95;text-transform:uppercase;margin-top:8px}
+.hero p{margin-top:14px;font-size:15.5px;font-weight:500;max-width:58ch}
+.ticker{background:var(--ink);color:#fff;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ticker .wrap{display:flex;width:max-content;min-width:0;max-width:none;margin:0 auto}
+.game{display:grid;grid-template-columns:auto auto;column-gap:16px;padding:11px 20px 11px 0;margin-right:20px;border-right:1px solid #4a4d52;font-size:13.5px;line-height:1.4;white-space:nowrap}
+.game:last-child{border-right:0;margin-right:0}
+.game b{font-weight:800}
+.game .lost{color:#b6bac1}
+.game .pts{text-align:right;font-variant-numeric:tabular-nums}
+.sec{padding:36px 0 0}
+h2{font-stretch:62%;font-weight:900;font-style:italic;font-size:46px;line-height:.9;text-transform:uppercase;margin-bottom:16px}
+.lede{padding-top:30px}
+.lede p,.prose p{max-width:64ch}
+.lede p+p,.prose p+p{margin-top:12px}
+.lede p:first-child{font-size:20px;line-height:1.45;font-weight:500}
+.hardware{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:30px}
+.hw{padding:10px 0 11px;border-top:1px solid var(--rule)}
+.hw b{display:block;font-stretch:75%;font-weight:800;font-size:14.5px}
+.hw span{font-weight:600}
+.hw small{display:block;font-size:14px;color:var(--muted)}
+.slipband{background:var(--band);margin-top:38px;padding:34px 0 46px}
+.slipband h2{margin-bottom:22px}
+.slipgrid{display:grid;grid-template-columns:minmax(0,390px) minmax(0,1fr);column-gap:44px;align-items:center}
+.tally b{display:block;font-stretch:62%;font-weight:900;font-style:italic;font-size:132px;line-height:.82;font-variant-numeric:tabular-nums}
+.tally span{display:block;font-stretch:75%;font-weight:800;font-size:17px;margin-top:10px}
+.tally small{display:block;font-size:14.5px;color:var(--muted);margin-top:4px;max-width:30ch}
+.slipwrap{max-width:390px;transform:rotate(-1.3deg);filter:drop-shadow(0 12px 12px rgba(0,0,0,.22))}
+.slip{--tooth:9px;background:#fffef7;padding:22px 20px 34px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;font-size:13px;line-height:1.5;
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/calc(2*var(--tooth)) 100%;
+  mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/calc(2*var(--tooth)) 100%}
+.slip .title{text-align:center;font-weight:700;font-size:15px;text-transform:uppercase}
+.slip .center{text-align:center}
+.slip hr{border:0;border-top:1.5px dashed var(--ink);margin:12px 0}
+.slip .pick{display:grid;grid-template-columns:1fr auto auto;column-gap:12px;align-items:end;padding:4px 0}
+.slip .hit{font-weight:700}
+.slip .miss{font-weight:700;text-decoration:line-through}
+.slip .sum{display:flex;justify-content:space-between;gap:12px}
+.tierband{background:var(--ink);color:#fff;margin-top:40px;padding:8px 14px 7px;font-stretch:62%;font-weight:900;font-style:italic;font-size:27px;line-height:1;text-transform:uppercase}
+.tierband:first-child{margin-top:0}
+.team{border-top:5px solid var(--ink);padding:18px 0 30px}
+.tierband+.team{border-top:0}
+.team .head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:16px;align-items:start}
+.num{font-stretch:62%;font-weight:900;font-style:italic;font-size:96px;line-height:.8;min-width:58px;font-variant-numeric:tabular-nums}
+.team h3{font-stretch:70%;font-weight:900;font-size:33px;line-height:1.02;overflow-wrap:anywhere}
+.byline{font-size:14px;color:var(--muted);margin-top:6px}
+.move{font-weight:800;font-size:15px;white-space:nowrap;padding-top:7px;text-align:right}
+.spark{display:block;margin:8px 0 0 auto;overflow:visible}
+.spark polyline{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.spark circle{fill:var(--ink)}
+.up{color:var(--win)}.down{color:var(--loss)}.dim{color:var(--muted)}
+.lead .num{background:var(--accent);font-size:124px;padding:12px 16px 2px 8px}
+.lead h3{font-size:44px}
+.stamps{display:flex;flex-wrap:wrap;gap:10px 12px;margin-top:16px}
+.stamp{border:2.5px solid currentColor;border-radius:3px;padding:1px 8px 0;font-stretch:75%;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.04em;transform:rotate(-2deg)}
+.stamp:nth-child(even){transform:rotate(1.6deg)}
+.stamp.good{color:var(--win)}.stamp.bad{color:var(--loss)}
+.result{display:flex;align-items:baseline;gap:10px;margin-top:16px;font-weight:600}
+.result i{font-style:normal;font-weight:900;color:#fff;background:var(--ink);padding:0 8px}
+.result.W i{background:var(--win)}.result.L i{background:var(--loss)}
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:14px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.strip div{padding:10px 8px 8px 0;min-width:0}
+.strip div+div{border-left:1px solid var(--rule);padding-left:10px}
+.strip b{display:block;font-stretch:68%;font-weight:900;font-size:29px;line-height:1;font-variant-numeric:tabular-nums}
+.strip span{display:block;font-size:12.5px;line-height:1.25;color:var(--muted);margin-top:3px}
+.facts{margin-top:12px;font-size:15px}
+.facts b{font-weight:700}
+.blurb{margin-top:20px;max-width:66ch}
+.blurb p{margin-top:12px}
+.kicker{font-stretch:68%;font-weight:900;font-style:italic;font-size:27px;line-height:1.3}
+.kicker span{background:linear-gradient(transparent 50%,var(--hi) 50%,var(--hi) 93%,transparent 93%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 5px 0 3px}
+details{margin-top:16px}
+summary{cursor:pointer;display:inline-block;font-weight:700;font-size:15px;text-decoration:underline;text-underline-offset:3px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:" +"}
+details[open] summary::after{content:" \2212"}
+.deep{margin-top:10px;font-size:15px;display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:18px;row-gap:5px}
+.deep dt{color:var(--muted)}
+.deep dd{font-weight:600}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:700;font-size:13px;border-bottom:3px solid var(--ink);padding:6px 12px 6px 0;white-space:nowrap}
+td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule)}
+td.n,th.n{text-align:right;padding-right:0;padding-left:12px;white-space:nowrap}
+td.c,th.c{text-align:center;padding-left:6px;padding-right:6px}
+td.k,th.k{width:1%;white-space:nowrap;font-weight:800;padding-right:14px}
+tr.grp th{font-stretch:62%;font-weight:900;font-style:italic;font-size:25px;line-height:1;text-transform:uppercase;border-bottom:3px solid var(--ink);padding:26px 0 6px}
+tr.grp:first-child th{padding-top:0}
+tr.cols th{border-bottom:1px solid var(--ink);color:var(--muted);font-weight:600;font-size:12.5px;padding-top:7px;padding-bottom:5px}
+td.up,td.down,td .up,td .down{font-weight:700}
+tr.out td{color:var(--muted)}
+.meter{display:inline-block;width:64px;height:8px;background:var(--band);vertical-align:middle;margin-left:8px}
+.meter i{display:block;height:100%;background:var(--ink)}
+.note{font-size:13.5px;color:var(--muted);margin-top:10px;max-width:70ch}
+.duel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+.duel b{display:block;font-stretch:75%;font-weight:800;font-size:14.5px}
+.duel strong{display:block;font-stretch:66%;font-weight:900;font-style:italic;font-size:31px;line-height:1;margin:4px 0 6px}
+.duel span{font-size:15px;color:var(--muted)}
+.editions a{display:grid;grid-template-columns:minmax(120px,auto) minmax(0,1fr);column-gap:18px;align-items:center;padding:13px 0 12px;border-top:1px solid var(--rule);text-decoration:none}
+.editions a:first-child{border-top:5px solid var(--ink)}
+.editions .wk{font-stretch:62%;font-weight:900;font-style:italic;font-size:46px;line-height:.9;text-transform:uppercase}
+.editions .who{font-size:15px}
+.editions .who small{display:block;color:var(--muted);font-size:14px}
+.editions a:hover .wk,.leagues a:hover .wk{text-decoration:underline;text-decoration-thickness:4px}
+.new{font-style:normal;font-stretch:100%;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:3px 7px;margin-left:10px;vertical-align:middle;text-transform:none}
+.leagues a{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:16px;align-items:stretch;padding:14px 0;border-top:1px solid var(--rule);text-decoration:none}
+.leagues a:first-child{border-top:5px solid var(--ink)}
+.leagues i{display:block}
+.leagues .wk{font-stretch:62%;font-weight:900;font-style:italic;font-size:44px;line-height:.95;text-transform:uppercase}
+.leagues small{display:block;color:var(--muted);font-size:14px}
+.mark,.hero h1,.hero .sub,h2,.tierband,.wk,tr.grp th{word-spacing:.14em}
+.foot{margin-top:auto;padding-top:56px}
+footer{background:var(--ink);color:#fff;padding:18px 0;font-size:14px}
+footer .mark{font-size:20px}
+@media(max-width:560px){
+ body{font-size:16.5px}
+ h2{font-size:38px}
+ .hardware,.duel,.slipgrid{grid-template-columns:minmax(0,1fr)}
+ .slipgrid{row-gap:26px}
+ .tally b{font-size:104px}
+ .hide-s{display:none}
+ .team .head{grid-template-columns:auto minmax(0,1fr)}
+ .move{grid-column:2;text-align:left;padding-top:6px;display:flex;align-items:center;gap:12px}
+ .spark{margin:0}
+ td,th{padding-right:8px}
+ .num{font-size:70px;min-width:44px}
+ .team .head{column-gap:12px}
+ .team h3{font-size:26px}
+ .lead .num{font-size:92px;padding:10px 12px 2px 6px}
+ .lead h3{font-size:32px}
+ .strip b{font-size:23px}
+ .strip span{font-size:11.5px}
+ .kicker{font-size:24px}
+ .editions a{grid-template-columns:minmax(96px,auto) minmax(0,1fr)}
+ .editions .wk{font-size:38px}
+}
+</style></head><body><div class="topbar"><div class="wrap"><a class="mark" href="../index.html">Kosecki&#x27;s Power Rankings</a><a class="nav" href="../index.html">All leagues</a></div></div><header class="hero"><div class="wrap"><h1>March Madness</h1><div class="sub">Power rankings</div></div></header><section class="sec"><div class="wrap"><div class="editions"><a href="2026/week3.html"><div class="wk">Week 3</div><div class="who">Minnesota Gophers at number one<span class="new">Latest</span><small>6-0, 2026 season</small></div></a><a href="2026/week2.html"><div class="wk">Week 2</div><div class="who">Minnesota Gophers at number one<small>4-0, 2026 season</small></div></a><a href="2026/week1.html"><div class="wk">Week 1</div><div class="who">Minnesota Gophers at number one<small>2-0, 2026 season</small></div></a></div></div></section><section class="sec"><div class="wrap"><h2>Playoff picture</h2><div class="tablewrap"><table><tr><th>Team</th><th class="n">Record</th><th class="n hide-s">Proj wins</th><th class="n">Playoffs</th><th class="n">Change</th><th class="n">Top seed</th></tr><tr><td>Minnesota Gophers</td><td class="n">6-0</td><td class="n hide-s">36.4</td><td class="n">100%<span class="meter hide-s"><i style="width:100%"></i></span></td><td class="n"></td><td class="n">52%</td></tr><tr><td>Arizona State Sun Devils</td><td class="n">5-1</td><td class="n hide-s">34.4</td><td class="n">100%<span class="meter hide-s"><i style="width:100%"></i></span></td><td class="n"></td><td class="n">30%</td></tr><tr><td>Kentucky Wildcats</td><td class="n">6-0</td><td class="n hide-s">31.6</td><td class="n">100%<span class="meter hide-s"><i style="width:100%"></i></span></td><td class="n"><span class="up">+1</span></td><td class="n">9%</td></tr><tr><td>Huoston Cogers</td><td class="n">5-1</td><td class="n hide-s">30.3</td><td class="n">100%<span class="meter hide-s"><i style="width:100%"></i></span></td><td class="n"></td><td class="n">7%</td></tr><tr><td>Duke Blue Devils</td><td class="n">3-3</td><td class="n hide-s">24.0</td><td class="n">94%<span class="meter hide-s"><i style="width:94%"></i></span></td><td class="n"><span class="up">+5</span></td><td class="n">1%</td></tr><tr><td>Bandervilt Commoners</td><td class="n">4-2</td><td class="n hide-s">23.0</td><td class="n">92%<span class="meter hide-s"><i style="width:92%"></i></span></td><td class="n"><span class="up">+10</span></td><td class="n">1%</td></tr><tr><td>kobekozy</td><td class="n">3-3</td><td class="n hide-s">17.5</td><td class="n">71%<span class="meter hide-s"><i style="width:71%"></i></span></td><td class="n"></td><td class="n">0%</td></tr><tr><td>UNC Tar Heels</td><td class="n">2-4</td><td class="n hide-s">16.4</td><td class="n">66%<span class="meter hide-s"><i style="width:66%"></i></span></td><td class="n"><span class="up">+8</span></td><td class="n">0%</td></tr><tr><td>Oklahoma Sooners </td><td class="n">1-5</td><td class="n hide-s">12.9</td><td class="n">37%<span class="meter hide-s"><i style="width:37%"></i></span></td><td class="n"><span class="up">+4</span></td><td class="n">0%</td></tr><tr><td>App State Mountineers</td><td class="n">1-5</td><td class="n hide-s">10.9</td><td class="n">24%<span class="meter hide-s"><i style="width:24%"></i></span></td><td class="n"><span class="down">-18</span></td><td class="n">0%</td></tr><tr><td>Michigan state</td><td class="n">0-6</td><td class="n hide-s">8.9</td><td class="n">13%<span class="meter hide-s"><i style="width:13%"></i></span></td><td class="n"><span class="down">-9</span></td><td class="n">0%</td></tr><tr><td>Boston College Eagles</td><td class="n">0-6</td><td class="n hide-s">5.6</td><td class="n">2%<span class="meter hide-s"><i style="width:2%"></i></span></td><td class="n"><span class="down">-3</span></td><td class="n">0%</td></tr></table></div><p class="note">4,000 simulated finishes of the last 18 weeks. Playoff field: top 8 by record, then points. Change is the move in playoff odds since last week.</p></div></section><section class="sec"><div class="wrap"><h2>Rank by week</h2><div class="tablewrap"><table><tr><th>Team</th><th class="c">W1</th><th class="c">W2</th><th class="c">W3</th></tr><tr><td>Minnesota Gophers</td><td class="c">1</td><td class="c">1</td><td class="c">1</td></tr><tr><td>Arizona State Sun Devils</td><td class="c">6</td><td class="c up">3</td><td class="c up">2</td></tr><tr><td>Kentucky Wildcats</td><td class="c">5</td><td class="c up">4</td><td class="c up">3</td></tr><tr><td>Huoston Cogers</td><td class="c">3</td><td class="c up">2</td><td class="c down">4</td></tr><tr><td>Bandervilt Commoners</td><td class="c">4</td><td class="c down">6</td><td class="c up">5</td></tr><tr><td>Duke Blue Devils</td><td class="c">2</td><td class="c down">5</td><td class="c down">6</td></tr><tr><td>kobekozy</td><td class="c">7</td><td class="c">7</td><td class="c">7</td></tr><tr><td>UNC Tar Heels</td><td class="c">8</td><td class="c">8</td><td class="c">8</td></tr><tr><td>Oklahoma Sooners </td><td class="c">9</td><td class="c">9</td><td class="c">9</td></tr><tr><td>Michigan state</td><td class="c">10</td><td class="c down">11</td><td class="c up">10</td></tr><tr><td>App State Mountineers</td><td class="c">12</td><td class="c up">10</td><td class="c down">11</td></tr><tr><td>Boston College Eagles</td><td class="c">11</td><td class="c down">12</td><td class="c">12</td></tr></table></div><p class="note">Green moved up from the week before, red moved down.</p></div></section><section class="sec"><div class="wrap"><h2>Schedule swap</h2><div class="tablewrap"><table><tr><th>Team</th><th class="c" title="Minnesota Gophers">#1</th><th class="c" title="Arizona State Sun Devils">#2</th><th class="c" title="Kentucky Wildcats">#3</th><th class="c" title="Huoston Cogers">#4</th><th class="c" title="Bandervilt Commoners">#5</th><th class="c" title="Duke Blue Devils">#6</th><th class="c" title="kobekozy">#7</th><th class="c" title="UNC Tar Heels">#8</th><th class="c" title="Oklahoma Sooners ">#9</th><th class="c" title="Michigan state">#10</th><th class="c" title="App State Mountineers">#11</th><th class="c" title="Boston College Eagles">#12</th></tr><tr><td>#1 Minnesota Gophers</td><td class="c dim">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">2-1</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">2-1</td><td class="c down">3-0</td></tr><tr><td>#2 Arizona State Sun Devils</td><td class="c down">2-1</td><td class="c dim">2-1</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">2-1</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">2-1</td><td class="c down">2-0</td></tr><tr><td>#3 Kentucky Wildcats</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c dim">3-0</td><td class="c down">2-1</td><td class="c down">3-0</td><td class="c down">3-0</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">3-0</td><td class="c down">1-2</td><td class="c down">1-2</td><td class="c down">2-1</td></tr><tr><td>#4 Huoston Cogers</td><td class="c down">3-0</td><td class="c down">1-2</td><td class="c down">3-0</td><td class="c dim">2-1</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">3-0</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">2-1</td></tr><tr><td>#5 Bandervilt Commoners</td><td class="c down">1-1</td><td class="c down">1-2</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c dim">2-1</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">1-2</td><td class="c down">3-0</td><td class="c down">1-2</td><td class="c down">1-2</td><td class="c down">2-1</td></tr><tr><td>#6 Duke Blue Devils</td><td class="c down">2-1</td><td class="c down">1-2</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">1-2</td><td class="c dim">1-2</td><td class="c down">2-1</td><td class="c">3-0</td><td class="c">3-0</td><td class="c down">1-2</td><td class="c down">2-1</td><td class="c down">2-1</td></tr><tr><td>#7 kobekozy</td><td class="c down">1-2</td><td class="c down">0-3</td><td class="c">3-0</td><td class="c down">2-1</td><td class="c down">2-1</td><td class="c down">0-3</td><td class="c dim">2-1</td><td class="c down">1-2</td><td class="c down">1-2</td><td class="c down">1-2</td><td class="c down">1-2</td><td class="c down">1-2</td></tr><tr><td>#8 UNC Tar Heels</td><td class="c down">1-2</td><td class="c down">0-3</td><td class="c up">3-0</td><td class="c">2-1</td><td class="c">2-1</td><td class="c down">0-3</td><td class="c">2-1</td><td class="c dim">2-1</td><td class="c">2-1</td><td class="c down">1-2</td><td class="c down">1-2</td><td class="c down">1-2</td></tr><tr><td>#9 Oklahoma Sooners </td><td class="c">1-2</td><td class="c down">0-3</td><td class="c">1-2</td><td class="c">1-1</td><td class="c">1-2</td><td class="c down">0-3</td><td class="c">1-2</td><td class="c down">0-3</td><td class="c dim">1-2</td><td class="c down">0-3</td><td class="c">1-2</td><td class="c">1-2</td></tr><tr><td>#10 Michigan state</td><td class="c">0-3</td><td class="c">0-3</td><td class="c up">2-1</td><td class="c up">1-2</td><td class="c up">1-2</td><td class="c">0-3</td><td class="c up">1-2</td><td class="c">0-3</td><td class="c up">1-2</td><td class="c dim">0-3</td><td class="c">0-3</td><td class="c">0-2</td></tr><tr><td>#11 App State Mountineers</td><td class="c">1-2</td><td class="c down">0-3</td><td class="c">1-2</td><td class="c">1-2</td><td class="c">1-2</td><td class="c down">0-3</td><td class="c down">0-3</td><td class="c">1-2</td><td class="c">1-2</td><td class="c down">0-3</td><td class="c dim">0-3</td><td class="c">1-2</td></tr><tr><td>#12 Boston College Eagles</td><td class="c">0-3</td><td class="c">0-3</td><td class="c">0-3</td><td class="c up">1-2</td><td class="c">0-3</td><td class="c">0-3</td><td class="c up">1-2</td><td class="c">0-3</td><td class="c">0-3</td><td class="c">0-3</td><td class="c">0-3</td><td class="c dim">0-3</td></tr></table></div><p class="note">Each row is one team's record if it had played the schedule of the team in that column (by rank). Green beats their real record, red is worse, grey is their own schedule.</p></div></section><section class="sec"><div class="wrap"><h2>Season record book</h2><div class="hardware"><div class="hw"><b>Highest score</b><span>Arizona State Sun Devils</span><small>545.0 points, week 2</small></div><div class="hw"><b>Lowest score</b><span>Boston College Eagles</span><small>228.0 points, week 2</small></div><div class="hw"><b>Biggest blowout</b><span>Huoston Cogers</span><small>beat App State Mountineers by 228.0, week 1</small></div><div class="hw"><b>Closest game</b><span>Bandervilt Commoners</span><small>beat Duke Blue Devils by 2.0, week 3</small></div></div></div></section><section class="sec"><div class="wrap"><h2>Trophy case</h2><div class="tablewrap"><table><tr><th>Team</th><th class="c">Total</th><th>Weekly awards won</th></tr><tr><td>Arizona State Sun Devils</td><td class="c">5</td><td>High score x2, Biggest riser x2, Robbed</td></tr><tr><td>Minnesota Gophers</td><td class="c">3</td><td>Player of the week, High score, Biggest blowout</td></tr><tr><td>Huoston Cogers</td><td class="c">3</td><td>Biggest blowout x2, Biggest faller</td></tr><tr><td>kobekozy</td><td class="c">3</td><td>Got away with one x2, Closest game</td></tr><tr><td>App State Mountineers</td><td class="c">3</td><td>Low score x2, Robbed</td></tr><tr><td>Boston College Eagles</td><td class="c">3</td><td>Low score, Best devy pipeline, Player of the week</td></tr><tr><td>Duke Blue Devils</td><td class="c">2</td><td>Biggest faller, Robbed</td></tr><tr><td>Oklahoma Sooners </td><td class="c">2</td><td>Closest game, Got away with one</td></tr><tr><td>Bandervilt Commoners</td><td class="c">1</td><td>Closest game</td></tr><tr><td>Michigan state</td><td class="c">1</td><td>Player of the week</td></tr></table></div></div></section><section class="sec"><div class="wrap"><h2>Devy pipeline</h2><div class="tablewrap"><table><tr><th class="k">#</th><th>Team</th><th class="c">Prospects</th><th>Top prospects</th></tr><tr><td class="k">1</td><td>Boston College Eagles</td><td class="c">15</td><td>Brandon McCoy, Jordan Smith Jr., Baba Oladotun, Anthony Thompson, Bruce Branch III</td></tr><tr><td class="k">2</td><td>UNC Tar Heels</td><td class="c">15</td><td>Dame Sarr, Shelton Henderson, JT Toppin, Derek Dixon, Ian Jackson</td></tr><tr><td class="k">3</td><td>Duke Blue Devils</td><td class="c">14</td><td>Dylan Mingo, Jasper Johnson, Miikka Muurinen, Isiah Harwell, Omer Mayer</td></tr><tr><td class="k">4</td><td>Minnesota Gophers</td><td class="c">10</td><td>Tounde Yessoufou, Sadiq White Jr, Mouhamed Sylla, Thomas Haugh, Amari Allen</td></tr><tr><td class="k">5</td><td>Arizona State Sun Devils</td><td class="c">8</td><td>Jason Crowe Jr., Braylon Mullins, Jalen Haralson, CJ Rosser, Beckham Black</td></tr><tr><td class="k">6</td><td>Huoston Cogers</td><td class="c">10</td><td>Alijah Arenas, Christian Collins, Dash Daniels, Cayden Daughtry, Qayden Samuels</td></tr><tr><td class="k">7</td><td>Michigan state</td><td class="c">7</td><td>Tyran Stokes, Caleb Holt, Taylen Kinney, Quentin Coleman, Jalil Bethea</td></tr><tr><td class="k">8</td><td>Bandervilt Commoners</td><td class="c">10</td><td>Malachi Moreno, Joson Sanon, Michael Ruzic, Solo Ball, Ivan Kharchenkov</td></tr><tr><td class="k">9</td><td>App State Mountineers</td><td class="c">5</td><td>Elijah Williams, Tahaad Pettiford, Deuce Tatum, AJ Williams, Joaquiem Boumtje Boumtje</td></tr><tr><td class="k">10</td><td>Oklahoma Sooners </td><td class="c">4</td><td>Cayden Boozer, Kiyan Anthony, Darren Harris, Bryce James</td></tr><tr><td class="k">11</td><td>Kentucky Wildcats</td><td class="c">3</td><td>Cameron Williams, Aziz Olajuwon, Ikenna Alozie</td></tr><tr><td class="k">12</td><td>kobekozy</td><td class="c">1</td><td>Bryson Tiller</td></tr></table></div><p class="note">Prospects held as placeholders, from the league's devy list. Ranked on prospect grades, the best one counting most.</p></div></section><div class="foot"><footer><div class="wrap"><span class="mark">Kosecki&#x27;s Power Rankings</span></div></footer></div></body></html>
